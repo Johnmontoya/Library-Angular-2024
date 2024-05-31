@@ -32,7 +32,7 @@ export class AuthService {
 
   register(data: IRegisterRequest): Observable<IApiResponse> {
     return this.http.post<IApiResponse>(
-      `${this.apiUrl}`,
+      `${this.apiUrl}/auth/register`,
       data
     );
   }
