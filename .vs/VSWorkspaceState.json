@@ -2,8 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\app"
+    "\\src\\app",
+    "\\src\\app\\components",
+    "\\src\\app\\components\\navbar",
+    "\\src\\app\\interceptor",
+    "\\src\\app\\interfaces",
+    "\\src\\app\\pages",
+    "\\src\\app\\pages\\profile",
+    "\\src\\app\\services"
   ],
-  "SelectedNode": "\\src\\styles.scss",
+  "SelectedNode": "\\src\\app\\app.config.ts",
   "PreviewInSolutionExplorer": false
 }
