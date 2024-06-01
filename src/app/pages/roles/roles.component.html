@@ -1,0 +1,14 @@
+<div class="h-screen flex items-center justify-center">
+  <app-role-form
+    [errorMessage]="errors"
+    [role]="role"
+    *ngIf="role"
+    (saveRole)="saveRole($event)"
+  />
+
+  <div class="w-full shadow-sm">
+    <app-role-list [roles]="roles$ | async" 
+      (deleteRole)="deleteRole($event)" 
+      (updateRole)="setEditRole($event)" />
+  </div>
+</div>

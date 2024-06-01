@@ -73,7 +73,7 @@ export class AuthService {
       id: decodedToken.nameid,
       userName: decodedToken.name,
       email: decodedToken.email,
-      roles: decodedToken.roles || []
+      roles: decodedToken.role || ''
     };
     return userDetail;
   }
@@ -104,6 +104,14 @@ export class AuthService {
     if (!user) return null;
     const userDetail: IApiResponse = JSON.parse(user);
     return userDetail.refreshToken;
+  }
+
+  getRoles = (): string => {
+    const token = this.getToken();
+    if(!token) return '';
+
+    const decodedToken: any = jwtDecode(token);
+    return decodedToken.role || null;
   }
 
 }

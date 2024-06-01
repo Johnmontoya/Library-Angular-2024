@@ -6,6 +6,8 @@ import { authGuard } from './guards/auth.guard';
 import { RegisterComponent } from './pages/register/register.component';
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { RolesComponent } from './pages/roles/roles.component';
+import { roleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
   {
@@ -32,5 +34,13 @@ export const routes: Routes = [
   {
     path: 'reset-password',
     component: ResetPasswordComponent
+  },
+  {
+    path: 'roles',
+    component: RolesComponent,
+    canActivate: [roleGuard],
+    data: {
+      roles: ['Admin']
+    }
   }
 ];
