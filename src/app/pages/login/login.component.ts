@@ -10,6 +10,9 @@ import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../../services/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { IApiResponse } from '../../interfaces/IApiResponse';
+import { IValidationError } from '../../interfaces/IValidationError';
 
 @Component({
   selector: 'app-login',
@@ -31,21 +34,31 @@ export class LoginComponent implements OnInit {
   hide = true;
   form!: FormGroup;
   fb = inject(FormBuilder);
+  errors: IValidationError[] = [];
 
   login() {
     this.authService.login(this.form.value).subscribe({
-      next: (response) => {
+      next: (response: IApiResponse) => {
         this.matSnackBar.open(response.message, 'Close', {
           duration: 5000,
           horizontalPosition: 'center'
         });
         this.router.navigate(['/']);
-      },
-      error: (error) => {
-        this.matSnackBar.open(error.error.message, 'Close', {
-          duration: 5000,
-          horizontalPosition: 'center'
-        })
+      }, 
+      error: (err: HttpErrorResponse) => {
+        if (err!.status === 401) {
+          if(Array.isArray(err.error)){
+            this.errors = err.error;
+          } else if(typeof err.error === 'object' && err.error.errors){
+            this.errors = err.error.errors;
+          } else {
+            this.errors = [err.error];
+          }  
+          this.matSnackBar.open('Error de validacion', 'Close', {
+            duration: 5000,
+            horizontalPosition: 'center',
+          });
+        }
       }
     })
   }

@@ -7,6 +7,7 @@ import { IApiResponse } from '../interfaces/IApiResponse';
 import { IRegisterRequest } from '../interfaces/IRegisterRequest';
 import { IUserDetail } from '../interfaces/IUserDetail';
 import { jwtDecode } from 'jwt-decode';
+import { IResetPasswordRequest } from '../interfaces/IResetPasswordRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,22 @@ export class AuthService {
       `${this.apiUrl}/auth/register`,
       data
     );
+  }
+
+  forgotPassword = (email: string): Observable<IApiResponse> => {
+    return this.http.post<IApiResponse>(
+      `${this.apiUrl}/auth/forgot-password`,
+      {
+        email
+      }
+    )
+  }
+
+  resetPassword = (data: IResetPasswordRequest): Observable<IApiResponse> => {
+    return this.http.post<IApiResponse>(
+      `${this.apiUrl}/auth/reset-password`,
+      data
+    )
   }
 
   getToken = (): string | null => {
