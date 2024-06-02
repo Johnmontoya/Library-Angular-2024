@@ -1,0 +1,36 @@
+<div class="border-slate-100 border-b p-3 fl gap-2 justify-between">
+  <table class="text-left w-full border">
+    <thead>
+      <tr class="px-5">
+        <th class="border p-2">Clave</th>
+        <th class="border p-2">Nombre</th>
+        <th class="border p-2">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if (categorias) { @for (category of categorias.value; track category?.Id)
+      {
+      <tr class="border-b">
+        <td class="border p-3">{{ category?.Clave }}</td>
+        <td class="border p-3">{{ category?.Nombre }}</td>
+        <div>
+          <mat-icon
+            (click)="update(category!)"
+            class="cursor-pointer text-red-600"
+          >
+            edit
+          </mat-icon>
+          <mat-icon
+            (click)="delete(category!)"
+            class="cursor-pointer text-red-600"
+          >
+            delete
+          </mat-icon>
+        </div>
+      </tr>
+      } }@else {
+      <div>No hay categorias</div>
+      }
+    </tbody>
+  </table>
+</div>

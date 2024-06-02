@@ -32,17 +32,21 @@
               <mat-icon>account_circle</mat-icon>
               <span>Ver Perfil</span>
             </button>
+            <div *ngIf="userDetail?.roles.includes('Admin')">
+              <button mat-menu-item [routerLink]="['/categorias']">
+                <mat-icon>account_circle</mat-icon>
+                <span>Categorias</span>
+              </button>
+              <button mat-menu-item [routerLink]="['/roles']">
+                <mat-icon>settings</mat-icon>
+                <span>Roles</span>
+              </button>
+            </div>           
             <button (click)="logout()" mat-menu-item>
               <mat-icon>logout</mat-icon>
               <span>Cerrar Sesión</span>
             </button>
           </mat-menu>
-          <a *ngIf="userDetail?.roles.includes('Admin')"
-            mat-button
-            routerLink="/roles">
-            <mat-icon> settings </mat-icon>
-            Roles
-          </a>
         </div>
       </div>
     } @else {

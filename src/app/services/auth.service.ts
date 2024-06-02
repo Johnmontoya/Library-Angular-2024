@@ -20,7 +20,7 @@ export class AuthService {
 
   login(data: ILoginRequest): Observable<IApiResponse> {
     return this.http
-      .post<IApiResponse>(`${this.apiUrl}/auth/login`, data)
+      .post<IApiResponse>(`${this.apiUrl}/api/auth/login`, data)
       .pipe(
         map((response) => {
           if (response.isSuccess) {
@@ -33,14 +33,14 @@ export class AuthService {
 
   register(data: IRegisterRequest): Observable<IApiResponse> {
     return this.http.post<IApiResponse>(
-      `${this.apiUrl}/auth/register`,
+      `${this.apiUrl}/api/auth/register`,
       data
     );
   }
 
   forgotPassword = (email: string): Observable<IApiResponse> => {
     return this.http.post<IApiResponse>(
-      `${this.apiUrl}/auth/forgot-password`,
+      `${this.apiUrl}/api/auth/forgot-password`,
       {
         email
       }
@@ -49,7 +49,7 @@ export class AuthService {
 
   resetPassword = (data: IResetPasswordRequest): Observable<IApiResponse> => {
     return this.http.post<IApiResponse>(
-      `${this.apiUrl}/auth/reset-password`,
+      `${this.apiUrl}/api/auth/reset-password`,
       data
     )
   }
@@ -62,7 +62,7 @@ export class AuthService {
   }
 
   getDetail = (): Observable<IUserDetail> => {
-    return this.http.get<IUserDetail>(`${this.apiUrl}/auth/profile`);
+    return this.http.get<IUserDetail>(`${this.apiUrl}/api/auth/profile`);
   }
 
   getUserDetail = () => {
@@ -94,7 +94,7 @@ export class AuthService {
     refreshToken: string;
   }): Observable<IApiResponse> => {
     return this.http.post<IApiResponse>(
-      `${this.apiUrl}/auth/refresh-token`,
+      `${this.apiUrl}/api/auth/refresh-token`,
       data
     )
   };

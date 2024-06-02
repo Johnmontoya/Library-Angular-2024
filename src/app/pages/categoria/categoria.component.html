@@ -1,0 +1,15 @@
+<div class="h-screen flex items-center justify-center">
+    <app-category-form
+        [errorMessage]="errors"
+        [category]="categoria"
+        *ngIf="categoria"
+        (addCategoria)="saveCategory($event)"
+    />
+
+    <div class="w-full shadow-sm">
+        <app-category-list [categorias]="categorias$ | async"
+            (deleteCategory)="deleteCategoria($event)"
+            (updateCategory)="setEditCategory($event)"
+        />
+    </div>
+</div>

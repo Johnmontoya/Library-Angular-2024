@@ -1,60 +1,59 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { RoleService } from '../../services/role.service';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import { CategoryListComponent } from '../../components/categoria/category-list/category-list.component';
+import { ICategoria } from '../../interfaces/ICategoria';
+import { CategoryFormComponent } from '../../components/categoria/category-form/category-form.component';
+import { CategoriaService } from '../../services/categoria.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { IRole } from '../../interfaces/IRole';
-import { IApiResponse } from '../../interfaces/IApiResponse';
-import { HttpErrorResponse } from '@angular/common/http';
 import { IValidationError } from '../../interfaces/IValidationError';
-import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { MatSelectModule } from '@angular/material/select';
-import { MatIconModule } from '@angular/material/icon';
+import { HttpErrorResponse } from '@angular/common/http';
+import { IApiResponse } from '../../interfaces/IApiResponse';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { RoleListComponent } from '../../components/role-list/role-list.component';
-import { RoleFormComponent } from '../../components/role-form/role-form.component';
-import { IRoleResponse } from '../../interfaces/IRoleResponse';
+import { ICategoriaResponse, ListCategoria } from '../../interfaces/ICategoriaResponse';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-roles',
+  selector: 'app-categoria',
   standalone: true,
-  imports: [
-    RoleFormComponent,
-    RoleListComponent,
-    MatInputModule,
-    ReactiveFormsModule,
-    RouterLink,
-    MatSelectModule,
-    MatIconModule,
-    AsyncPipe,
-    CommonModule,
-  ],
-  templateUrl: './roles.component.html',
-  styleUrl: './roles.component.scss',
+  imports: [CategoryListComponent, CategoryFormComponent, CommonModule, AsyncPipe],
+  templateUrl: './categoria.component.html',
+  styleUrl: './categoria.component.scss',
 })
-export class RolesComponent {
-  authService = inject(AuthService);
-  roleService = inject(RoleService);
+export class CategoriaComponent implements OnInit{  
+  categoryService = inject(CategoriaService);
   matSnackBar = inject(MatSnackBar);
-  role: IRole = {} as IRole;
-  roles$ = this.roleService.getRoles();
+  categoria: ICategoria = {} as ICategoria;
+  categorias$ = this.categoryService.getCategorias();
+  listCategorias$: any
   errors: IValidationError[] = [];
   isEditing: boolean = false;
 
-  saveRole(role: IRole) {
-    if(this.isEditing) {
-      this.updateRole(role)
+  saveCategory(categoria: ICategoria) {
+    if(this.isEditing){
+      this.updateCategory(categoria)
     } else {
-      this.createRole(role)
+      this.createCategory(categoria)
     }
   }
 
-  createRole(role: IRole) {
-    this.roleService.createRole(role).subscribe({
+  setEditCategory(category: ListCategoria) {
+    this.categoria = {
+      id: category.Id,
+      clave: parseInt(category.Clave),
+      nombre: category.Nombre
+    };
+    this.isEditing = true;
+  }
+
+  ngOnInit(): void {
+    this.categoryService.getCategorias().subscribe((data) => {
+      this.listCategorias$ = data.value
+    })
+  }  
+
+  createCategory(category: ICategoria){
+    this.categoryService.createCategoria(category).subscribe({
       next: (response: IApiResponse) => {
-        this.roles$ = this.roleService.getRoles();
+        this.categorias$ = this.categoryService.getCategorias();
         this.matSnackBar.open(response.message, 'Close', {
           duration: 5000,
           horizontalPosition: 'center',
@@ -76,32 +75,24 @@ export class RolesComponent {
         }
       },
       complete: () => {
-        this.role = {} as IRole;
-        this.matSnackBar.open('Rol Guardado', 'Close', {
+        this.categoria = {} as ICategoria;
+        this.matSnackBar.open('Categoria Guardada', 'Close', {
           duration: 5000,
           horizontalPosition: 'center',
         });
-      },
-    });
+      }
+    })
   }
 
-  setEditRole(role: IRoleResponse) {
-    this.role = {
-      id: role.id,
-      roleName: role.name,
-    };
-    this.isEditing = true;
-  }
-
-  updateRole(role: IRole) {
-    this.roleService.updateRole(role).subscribe({
+  updateCategory(category: ICategoria) {
+    this.categoryService.updateCategoria(category).subscribe({
       next: (response: IApiResponse) => {
-        this.roles$ = this.roleService.getRoles();
+        this.categorias$ = this.categoryService.getCategorias();
         this.matSnackBar.open(response.message, 'Close', {
           duration: 3000,
         });
         this.isEditing = false;
-        this.role = {} as IRole;
+        this.categoria = {} as ICategoria;
       },
       error: (err: HttpErrorResponse) => {
         if (err!.status === 400) {
@@ -121,18 +112,18 @@ export class RolesComponent {
     });
   }
 
-  deleteRole(role: IRoleResponse) {
+  deleteCategoria(category: ListCategoria) {
     Swal.fire({
       title: 'Borrar',
-      text: `Esta seguro de querer eliminar el rol ${role.name}`,
+      text: `Esta seguro de querer eliminar la categoria ${category.Nombre}`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Si, borrar el rol',
     }).then((result) => {
       if(result.value) {
-        this.roleService.delete(role.id).subscribe({
+        this.categoryService.delete(category.Id).subscribe({
           next: (response: IApiResponse) => {
-            this.roles$ = this.roleService.getRoles();
+            this.categorias$ = this.categoryService.getCategorias();
             this.matSnackBar.open(response.message, 'Close', {
               duration: 3000,
             });
@@ -145,7 +136,7 @@ export class RolesComponent {
         });
         Swal.fire({
           title: 'Borrado',
-          text: 'El rol ha sido eliminado',
+          text: 'La categoria ha sido eliminada',
           icon:'success'
         })
       }

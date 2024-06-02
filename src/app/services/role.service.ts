@@ -15,22 +15,22 @@ export class RoleService {
   constructor(private http: HttpClient) {}
 
   getRoles = (): Observable<IRoleResponse[]> => {
-    return this.http.get<IRoleResponse[]>(`${this.apiUrl}/role`);
+    return this.http.get<IRoleResponse[]>(`${this.apiUrl}/api/role`);
   };
 
   getRole = (id: string): Observable<IApiResponse> => {
-    return this.http.get<IApiResponse>(`${this.apiUrl}/role/${id}`);
+    return this.http.get<IApiResponse>(`${this.apiUrl}/apirole/${id}`);
   };
 
   createRole = (data: IRole): Observable<IApiResponse> => {
-    return this.http.post<IApiResponse>(`${this.apiUrl}/role`, data);
+    return this.http.post<IApiResponse>(`${this.apiUrl}/api/role`, data);
   };
 
   updateRole = (data: IRole): Observable<IApiResponse> => {
-    return this.http.put<IApiResponse>(`${this.apiUrl}/role/${data.id}`, data);
+    return this.http.put<IApiResponse>(`${this.apiUrl}/api/role/${data.id}`, data);
   };
 
   delete = (id: string): Observable<IApiResponse> => {
-    return this.http.delete<IApiResponse>(`${this.apiUrl}/role/${id}`);
+    return this.http.delete<IApiResponse>(`${this.apiUrl}/api/role/${id}`);
   };
 }
