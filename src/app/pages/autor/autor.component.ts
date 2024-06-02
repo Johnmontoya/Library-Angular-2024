@@ -1,52 +1,51 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
-import { CategoryListComponent } from '../../components/categoria/category-list/category-list.component';
-import { ICategoria } from '../../interfaces/ICategoria';
-import { CategoryFormComponent } from '../../components/categoria/category-form/category-form.component';
-import { CategoriaService } from '../../services/categoria.service';
+import { Component, inject } from '@angular/core';
+import { AutorService } from '../../services/autor.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { IAutor } from '../../interfaces/IAutor';
 import { IValidationError } from '../../interfaces/IValidationError';
-import { HttpErrorResponse } from '@angular/common/http';
 import { IApiResponse } from '../../interfaces/IApiResponse';
-import { AsyncPipe, CommonModule } from '@angular/common';
-import { ICategoriaResponse, ListCategoria } from '../../interfaces/ICategoriaResponse';
+import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { AutorListComponent } from '../../components/autor/autor-list/autor-list.component';
+import { AutorFormComponent } from '../../components/autor/autor-form/autor-form.component';
+import { AsyncPipe, CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-categoria',
+  selector: 'app-autor',
   standalone: true,
-  imports: [CategoryListComponent, CategoryFormComponent, CommonModule, AsyncPipe],
-  templateUrl: './categoria.component.html',
-  styleUrl: './categoria.component.scss',
+  imports: [AutorListComponent, AutorFormComponent, AsyncPipe, CommonModule],
+  templateUrl: './autor.component.html',
+  styleUrl: './autor.component.scss'
 })
-export class CategoriaComponent{  
-  categoryService = inject(CategoriaService);
+export class AutorComponent {
+  autorService = inject(AutorService);
   matSnackBar = inject(MatSnackBar);
-  categoria: ICategoria = {} as ICategoria;
-  categorias$ = this.categoryService.getCategorias();
+  autor: IAutor = {} as IAutor;
+  autores$ = this.autorService.getAutors();
   errors: IValidationError[] = [];
   isEditing: boolean = false;
 
-  saveCategory(categoria: ICategoria) {
-    if(this.isEditing){
-      this.updateCategory(categoria)
+  saveAutor(autor: IAutor) {
+    if(this.isEditing) {
+      this.updateAutor(autor)
     } else {
-      this.createCategory(categoria)
+      this.createAutor(autor)
     }
   }
 
-  setEditCategory(category: ListCategoria) {
-    this.categoria = {
-      id: category.Id,
-      clave: parseInt(category.Clave),
-      nombre: category.Nombre
+  setEditAutor(autor: IAutor) {
+    this.autor = {
+      Id: autor.Id,
+      Nombre: autor.Nombre,
+      Nacionalidad: autor.Nacionalidad
     };
     this.isEditing = true;
   }
-  
-  createCategory(category: ICategoria){
-    this.categoryService.createCategoria(category).subscribe({
+
+  createAutor(autor: IAutor){
+    this.autorService.createAutor(autor).subscribe({
       next: (response: IApiResponse) => {
-        this.categorias$ = this.categoryService.getCategorias();
+        this.autores$ = this.autorService.getAutors();
         this.matSnackBar.open(response.message, 'Close', {
           duration: 5000,
           horizontalPosition: 'center',
@@ -68,8 +67,8 @@ export class CategoriaComponent{
         }
       },
       complete: () => {
-        this.categoria = {} as ICategoria;
-        this.matSnackBar.open('Categoria Guardada', 'Close', {
+        this.autor = {} as IAutor;
+        this.matSnackBar.open('Autor Guardado', 'Close', {
           duration: 5000,
           horizontalPosition: 'center',
         });
@@ -77,15 +76,15 @@ export class CategoriaComponent{
     })
   }
 
-  updateCategory(category: ICategoria) {
-    this.categoryService.updateCategoria(category).subscribe({
+  updateAutor(autor: IAutor) {
+    this.autorService.updateAutor(autor).subscribe({
       next: (response: IApiResponse) => {
-        this.categorias$ = this.categoryService.getCategorias();
+        this.autores$ = this.autorService.getAutors();
         this.matSnackBar.open(response.message, 'Close', {
           duration: 3000,
         });
         this.isEditing = false;
-        this.categoria = {} as ICategoria;
+        this.autor = {} as IAutor;
       },
       error: (err: HttpErrorResponse) => {
         if (err!.status === 400) {
@@ -105,18 +104,18 @@ export class CategoriaComponent{
     });
   }
 
-  deleteCategoria(category: ListCategoria) {
+  deleteAutor(autor: IAutor) {
     Swal.fire({
       title: 'Borrar',
-      text: `Esta seguro de querer eliminar la categoria ${category.Nombre}`,
+      text: `Esta seguro de querer eliminar al autor ${autor.Nombre}`,
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Si, borrar la categoria',
+      confirmButtonText: 'Si, borrar el autor',
     }).then((result) => {
       if(result.value) {
-        this.categoryService.delete(category.Id).subscribe({
+        this.autorService.delete(autor.Id).subscribe({
           next: (response: IApiResponse) => {
-            this.categorias$ = this.categoryService.getCategorias();
+            this.autores$ = this.autorService.getAutors();
             this.matSnackBar.open(response.message, 'Close', {
               duration: 3000,
             });
@@ -129,7 +128,7 @@ export class CategoriaComponent{
         });
         Swal.fire({
           title: 'Borrado',
-          text: 'La categoria ha sido eliminada',
+          text: 'El autor ha sido eliminado',
           icon:'success'
         })
       }

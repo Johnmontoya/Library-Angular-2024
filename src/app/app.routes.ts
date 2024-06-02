@@ -9,6 +9,7 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 import { RolesComponent } from './pages/roles/roles.component';
 import { roleGuard } from './guards/role.guard';
 import { CategoriaComponent } from './pages/categoria/categoria.component';
+import { AutorComponent } from './pages/autor/autor.component';
 
 export const routes: Routes = [
   {
@@ -47,6 +48,14 @@ export const routes: Routes = [
   {
     path: 'categorias',
     component: CategoriaComponent,
+    canActivate: [roleGuard],
+    data: {
+      roles: ['Admin']
+    }
+  },
+  {
+    path: 'autores',
+    component: AutorComponent,
     canActivate: [roleGuard],
     data: {
       roles: ['Admin']

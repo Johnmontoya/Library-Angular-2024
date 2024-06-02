@@ -1,0 +1,15 @@
+<div class="h-screen flex items-center justify-center">
+    <app-autor-form 
+        [errorMessage]="errors"
+        [autor]="autor"
+        *ngIf="autor"
+        (addAutor)="saveAutor($event)"
+    />
+
+    <div class="w-full shadow-sm">
+        <app-autor-list [autores]="autores$ | async"  
+            (deleteAutor)="deleteAutor($event)"
+            (updateAutor)="setEditAutor($event)"
+        />
+    </div>
+</div>

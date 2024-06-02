@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ICategoriaResponse, ListCategoria } from '../../../interfaces/ICategoriaResponse';
 import { MatIconModule } from '@angular/material/icon';
 

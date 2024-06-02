@@ -1,0 +1,35 @@
+<div class="border-slate-100 border-b p-3 fl gap-2 justify-between">
+  <table class="text-left w-full border">
+    <thead>
+      <tr class="px-5">
+        <th class="border p-2">Nombre</th>
+        <th class="border p-2">Nacionalidad</th>
+        <th class="border p-2">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if (autores) { @for (autor of autores.value; track autor?.Id) {
+      <tr class="border-b">
+        <td class="border p-3">{{ autor?.Nombre }}</td>
+        <td class="border p-3">{{ autor?.Nacionalidad }}</td>
+        <div>
+          <mat-icon
+            (click)="update(autor!)"
+            class="cursor-pointer text-red-600"
+          >
+            edit
+          </mat-icon>
+          <mat-icon
+            (click)="delete(autor!)"
+            class="cursor-pointer text-red-600"
+          >
+            delete
+          </mat-icon>
+        </div>
+      </tr>
+      } }@else {
+      <div>No hay autores</div>
+      }
+    </tbody>
+  </table>
+</div>
