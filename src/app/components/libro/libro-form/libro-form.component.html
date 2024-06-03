@@ -1,0 +1,86 @@
+<div class="rounded-md mt-5 p-5">
+    <form (ngSubmit)="save()">
+      <!--<mat-form-field class="w-full">
+        <mat-label>Categoria</mat-label>
+        <input
+          matInput
+          name="CategoriaId"
+          [(ngModel)]="libro.CategoriaId"
+          placeholder="Identificador de la categoria"
+          required
+        />
+      </mat-form-field>-->
+      <mat-form-field class="w-full">
+        <mat-label>Categoria</mat-label>
+        <input type="text"
+               placeholder="Pick one"
+               aria-label="Number"
+               matInput
+               name="CategoriaId"
+               [formControl]="myControl"
+               [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Nombre</mat-label>
+        <input
+          matInput
+          name="name"
+          [(ngModel)]="libro.Nombre"
+          placeholder="Nombre del libro"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Editorial</mat-label>
+        <input
+          matInput
+          name="editorial"
+          [(ngModel)]="libro.Editorial"
+          placeholder="Nombre de la editorial"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Autor</mat-label>
+        <input type="text"
+               placeholder="Pick one"
+               aria-label="Number"
+               matInput
+               name="AutorId"
+               [formControl]="myControlAutor"
+               [matAutocomplete]="autoAutor">
+        <mat-autocomplete autoActiveFirstOption #autoAutor="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptionsAutors | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+  
+      @if(errorMessage){
+      <p class="text-base text-red-500">
+          @for(error of errorMessage; track error){
+          <div
+              class="bg-red-100 border mb-2 flex flex-col gap-2 border-red-400 text-red-400 px-4 py-4 rounded-md relative"
+          >
+              <div class="text-xs p-2">{{ error.description }}</div>
+          </div>
+          }
+      </p>
+      }
+      <button
+        [disabled]="!libro.Nombre"
+        type="submit"
+        class="bg-purple-600 px-4 disabled:bg-purple-400 rounded-md text-white py-2 m-2"
+      >
+        Guardar Libro
+      </button>
+    </form>
+  </div>

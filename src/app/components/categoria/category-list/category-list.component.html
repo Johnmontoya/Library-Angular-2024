@@ -12,7 +12,11 @@
       {
       <tr class="border-b">
         <td class="border p-3">{{ category?.Clave }}</td>
-        <td class="border p-3">{{ category?.Nombre }}</td>
+        <td class="border p-3">
+          <a class="font-semibold" [routerLink]="['/categorias', category?.Id]">
+            {{ category?.Nombre }}
+          </a>
+        </td>        
         <div>
           <mat-icon
             (click)="update(category!)"

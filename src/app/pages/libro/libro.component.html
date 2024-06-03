@@ -1,0 +1,15 @@
+<div class="h-screen flex items-center justify-center">
+    <app-libro-form
+        [errorMessage]="errors"
+        [libro]="libro"
+        *ngIf="libro"
+        (addLibro)="saveLibro($event)"
+    />
+
+    <div class="w-full shadow-sm">
+        <app-libro-list [libros]="libros$ | async"
+            (deleteLibro)="deleteLibro($event)"
+            (updateLibro)="setEditLibro($event)"
+        />
+    </div>
+</div>

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { IAutor, IAutorResponse } from '../interfaces/IAutor';
+import { IAutorApi, IAutor, IAutorResponse } from '../interfaces/IAutor';
 import { IApiResponse } from '../interfaces/IApiResponse';
 
 @Injectable({
@@ -12,6 +12,17 @@ export class AutorService {
   apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
+
+  selectAutor = (): Observable<IAutorApi[]> => {
+    return this.http.get<IAutorApi[]>(`${this.apiUrl}/api/autor`);
+  };
+
+  getAutor = (id: string): Observable<IAutorResponse> => {
+    return this.http
+    .get<IAutorResponse>(`${this.apiUrl}/odata/autor/${id}`, 
+    {params: new HttpParams().set('$expand', 'librosEscritos')})
+    .pipe(map((data) => data));
+  }
 
   getAutors = (): Observable<IAutorResponse> => {
     return this.http

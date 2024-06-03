@@ -1,0 +1,33 @@
+<div class="h-screen flex items-center justify-center">
+  <mat-card class="w-96 rounded-md" style="background-color: #fff">
+    @for (autor of autorInfo$?.value; track autor?.Id) {
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{ autor?.Nombre }}</mat-card-title>
+      <mat-card-subtitle [className]="['text-slate-800']">{{ autor?.Nacionalidad }}</mat-card-subtitle>
+    </mat-card-header>
+    <img
+      mat-card-image
+      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+      alt="Photo of a Shiba Inu"
+    />
+    <mat-card-content>
+      <h2>Libros escritos</h2>
+      <mat-list>
+        @for(libros of autor?.LibrosEscritos; track libros?.Id){
+        <mat-list-item>
+          <span matListItemTitle [className]="['text-slate-900']">
+            <span class="font-semibold">Titulo: </span> {{ libros?.Nombre }}
+          </span>
+          <span [className]="['text-slate-900']">
+            <span class="font-semibold">Editorial: </span> {{ libros?.Editorial }}
+          </span>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+        
+        }
+      </mat-list>
+    </mat-card-content>
+    }
+  </mat-card>
+</div>

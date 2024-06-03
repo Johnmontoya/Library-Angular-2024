@@ -10,6 +10,9 @@ import { RolesComponent } from './pages/roles/roles.component';
 import { roleGuard } from './guards/role.guard';
 import { CategoriaComponent } from './pages/categoria/categoria.component';
 import { AutorComponent } from './pages/autor/autor.component';
+import { LibroComponent } from './pages/libro/libro.component';
+import { AutorDetailComponent } from './pages/autor/autor-detail/autor-detail.component';
+import { CategoriaDetailComponent } from './pages/categoria/categoria-detail/categoria-detail.component';
 
 export const routes: Routes = [
   {
@@ -54,8 +57,26 @@ export const routes: Routes = [
     }
   },
   {
+    path: 'categorias/:id',
+    component: CategoriaDetailComponent,
+    canActivate: [authGuard]
+  },
+  {
     path: 'autores',
     component: AutorComponent,
+    canActivate: [roleGuard],
+    data: {
+      roles: ['Admin']
+    }
+  },
+  {
+    path: 'autores/:id',
+    component: AutorDetailComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'libros',
+    component: LibroComponent,
     canActivate: [roleGuard],
     data: {
       roles: ['Admin']

@@ -37,7 +37,8 @@ export class AutorComponent {
     this.autor = {
       Id: autor.Id,
       Nombre: autor.Nombre,
-      Nacionalidad: autor.Nacionalidad
+      Nacionalidad: autor.Nacionalidad,
+      LibrosEscritos: autor.LibrosEscritos
     };
     this.isEditing = true;
   }

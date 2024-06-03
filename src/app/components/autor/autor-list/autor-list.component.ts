@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IAutor, IAutorResponse } from '../../../interfaces/IAutor';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-autor-list',
   standalone: true,
-  imports: [MatIconModule],
+  imports: [MatIconModule, RouterLink],
   templateUrl: './autor-list.component.html',
   styleUrl: './autor-list.component.scss',
 })

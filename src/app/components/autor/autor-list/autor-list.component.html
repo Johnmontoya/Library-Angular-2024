@@ -10,7 +10,11 @@
     <tbody>
       @if (autores) { @for (autor of autores.value; track autor?.Id) {
       <tr class="border-b">
-        <td class="border p-3">{{ autor?.Nombre }}</td>
+        <td class="border p-3">
+          <a class="font-semibold" [routerLink]="['/autores', autor?.Id]">
+            {{ autor?.Nombre }}
+          </a>
+        </td>
         <td class="border p-3">{{ autor?.Nacionalidad }}</td>
         <div>
           <mat-icon
