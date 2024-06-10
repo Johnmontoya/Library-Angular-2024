@@ -10,8 +10,8 @@ import { IApiResponse } from '../../interfaces/IApiResponse';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ToastComponent } from '../../components/toast/toast.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { ToastComponent } from '../../components/UI/toast/toast.component';
 
 @Component({
   selector: 'app-categoria',

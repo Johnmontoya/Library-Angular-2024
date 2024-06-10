@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ICategoria } from '../../../interfaces/ICategoria';
-import { ActionCellComponent } from '../../action-cell/action-cell.component';
+import { ActionCellComponent } from '../../UI/action-cell/action-cell.component';
 
 @Component({
   selector: 'app-category-list',

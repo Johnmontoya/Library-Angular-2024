@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { IRoleResponse } from '../../interfaces/IRoleResponse';
+import { IRoleResponse } from '../../../interfaces/IRoleResponse';
 
 @Component({
   selector: 'app-role-list',

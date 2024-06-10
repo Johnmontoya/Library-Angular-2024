@@ -9,7 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { ActionCellComponent } from '../../action-cell/action-cell.component';
+import { ActionCellComponent } from '../../UI/action-cell/action-cell.component';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({

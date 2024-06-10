@@ -12,10 +12,10 @@ import { RouterLink } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { RoleListComponent } from '../../components/role-list/role-list.component';
-import { RoleFormComponent } from '../../components/role-form/role-form.component';
 import { IRoleResponse } from '../../interfaces/IRoleResponse';
 import Swal from 'sweetalert2';
+import { RoleFormComponent } from '../../components/role/role-form/role-form.component';
+import { RoleListComponent } from '../../components/role/role-list/role-list.component';
 
 @Component({
   selector: 'app-roles',

@@ -10,7 +10,8 @@ import { AutorListComponent } from '../../components/autor/autor-list/autor-list
 import { AutorFormComponent } from '../../components/autor/autor-form/autor-form.component';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ToastComponent } from '../../components/toast/toast.component';
+import { ToastComponent } from '../../components/UI/toast/toast.component';
+
 
 @Component({
   selector: 'app-autor',

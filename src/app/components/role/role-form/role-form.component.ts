@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IRole } from '../../interfaces/IRole';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { IValidationError } from '../../interfaces/IValidationError';
+import { IValidationError } from '../../../interfaces/IValidationError';
+import { IRole } from '../../../interfaces/IRole';
+
 
 @Component({
   selector: 'app-role-form',
