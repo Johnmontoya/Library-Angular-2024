@@ -1,37 +1,36 @@
 <div class="rounded-md mt-5 p-5">
-  <form (ngSubmit)="save()">
-    <mat-form-field class="w-full">
-      <mat-label>Nombre del Rol</mat-label>
-      <input
-        matInput
-        name="name"
-        [(ngModel)]="role.roleName"
-        placeholder="Rol"
-        required
-      />
+  <mat-dialog-content class="mat-typography">
+    <h2 mat-dialog-title>{{ name$ }}</h2>
+    <form [formGroup]="roleForm">      
 
-      @if(!role.roleName){
-      <mat-error class="text-base"> El nombre del rol es requerido </mat-error>
-      }
-    </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Nombre</mat-label>
+        <input
+          matInput
+          name="roleName"
+          formControlName="roleName"
+          placeholder="Nombre del Rol"
+          required
+        />
+      </mat-form-field>
+      
+    </form>
 
-    @if(errorMessage){
-    <p class="text-base text-red-500">
-        @for(error of errorMessage; track error){
-        <div
-            class="bg-red-100 border mb-2 flex flex-col gap-2 border-red-400 text-red-400 px-4 py-4 rounded-md relative"
-        >
-            <div class="text-xs p-2">{{ error.description }}</div>
-        </div>
-        }
-    </p>
-    }
+  </mat-dialog-content>
+  <div mat-dialog-actions class="flex justify-end">
     <button
-      [disabled]="!role.roleName"
-      type="submit"
-      class="bg-purple-600 px-4 disabled:bg-purple-400 rounded-md text-white py-2 m-2"
+      type="button"
+      class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+      (click)="close()"
     >
-      Guardar Rol
+      Cancelar
     </button>
-  </form>
+    <button
+      type="button"
+      class="text-white bg-[#3F76B5] hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-[#3F76B5] dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      (click)="save()"
+    >
+      Aceptar
+    </button>
+  </div>
 </div>

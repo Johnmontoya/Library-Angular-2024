@@ -16,6 +16,8 @@ import { IRoleResponse } from '../../interfaces/IRoleResponse';
 import Swal from 'sweetalert2';
 import { RoleFormComponent } from '../../components/role/role-form/role-form.component';
 import { RoleListComponent } from '../../components/role/role-list/role-list.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ToastComponent } from '../../components/UI/toast/toast.component';
 
 @Component({
   selector: 'app-roles',
@@ -42,6 +44,42 @@ export class RolesComponent {
   roles$ = this.roleService.getRoles();
   errors: IValidationError[] = [];
   isEditing: boolean = false;
+  currentRole: IRole | null = null;
+
+  constructor(public dialog: MatDialog) {}
+
+  openDialog() {
+    const dialogRef = this.dialog.open(RoleFormComponent, {
+      data: {
+        errorMessage: this.errors,
+        role: this.isEditing
+          ? this.currentRole
+          : { roleName: '' },
+        edit: this.isEditing ? 'Actualizar Rol' : 'Nuevo Rol'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result) {
+        if(this.isEditing) {
+          this.updateRole(result);
+        } else {
+          this.createRole(result);
+        }
+        this.isEditing = false;
+      }
+      this.isEditing = false;
+    });
+  }
+
+  setEditRole(role: IRoleResponse) {
+    this.isEditing = true;
+    this.currentRole = {
+      id: role.id,
+      roleName: role.name,
+    };
+    this.openDialog();
+  }
 
   saveRole(role: IRole) {
     if(this.isEditing) {
@@ -69,9 +107,11 @@ export class RolesComponent {
           } else {
             this.errors = [err.error];
           }
-          this.matSnackBar.open('Error de validacion', 'Close', {
+          this.matSnackBar.openFromComponent(ToastComponent, {
             duration: 5000,
-            horizontalPosition: 'center',
+            data: {
+              message: this.errors,
+            },
           });
         }
       },
@@ -83,15 +123,7 @@ export class RolesComponent {
         });
       },
     });
-  }
-
-  setEditRole(role: IRoleResponse) {
-    this.role = {
-      id: role.id,
-      roleName: role.name,
-    };
-    this.isEditing = true;
-  }
+  } 
 
   updateRole(role: IRole) {
     this.roleService.updateRole(role).subscribe({
@@ -112,9 +144,11 @@ export class RolesComponent {
           } else {
             this.errors = [err.error];
           }
-          this.matSnackBar.open('Error de validacion', 'Close', {
+          this.matSnackBar.openFromComponent(ToastComponent, {
             duration: 5000,
-            horizontalPosition: 'center',
+            data: {
+              message: this.errors,
+            },
           });
         }
       },
@@ -138,8 +172,11 @@ export class RolesComponent {
             });
           },
           error: (err: HttpErrorResponse) => {
-            this.matSnackBar.open(err.message, 'Close', {
-              duration: 3000,
+            this.matSnackBar.openFromComponent(ToastComponent, {
+              duration: 5000,
+              data: {
+                message: err.message,
+              },
             });
           },
         });

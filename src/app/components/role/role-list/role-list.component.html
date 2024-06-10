@@ -1,33 +1,25 @@
-<div class="border-slate-100 border-b p-3 fl gap-2 justify-between">
-    <table class="text-left w-full border">
-        <thead>
-            <tr class="px-5">
-                <th class="border p-2">Nombre</th>
-                <th class="border p-2">Usuarios</th>
-                <th class="border p-2">Acciones</th>
-            </tr>
-            @for (role of roles; track role.id) {
-                <tr class="border-b">
-                    <td class="border p-3">{{ role.name }}</td>
-                    <td class="border p-3">{{ role.totalUsers }}</td>
-                    <td class="border p-3 flex items-center gap-5">
-                        <div>
-                            <mat-icon
-                                (click)="update(role)"
-                                class="cursor-pointer text-red-600"
-                            >
-                                edit
-                            </mat-icon>
-                            <mat-icon
-                                (click)="delete(role)"
-                                class="cursor-pointer text-red-600"
-                            >
-                                delete
-                            </mat-icon>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </thead>
-    </table>
+<div class="border-slate-100 border-b p-0 sm:p-3 fl gap-2 justify-start">
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+      <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+    </ng-container>
+    <ng-container matColumnDef="totalUsers">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header># Usuarios</th>
+      <td mat-cell *matCellDef="let row">{{ row.totalUsers }}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions" stickyEnd>
+      <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+      <td mat-cell *matCellDef="let row">
+        <app-action-cell
+          [row]="row"
+          (update)="update($event)"
+          (delete)="delete($event)"
+        ></app-action-cell>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
 </div>
