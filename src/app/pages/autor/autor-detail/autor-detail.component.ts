@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
-import { IAutor, IAutorResponse } from '../../../interfaces/IAutor';
+import { IAutorResponse } from '../../../interfaces/IAutor';
 import { AutorService } from '../../../services/autor.service';
 import { MatDividerModule } from '@angular/material/divider';
 

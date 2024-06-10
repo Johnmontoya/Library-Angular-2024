@@ -15,9 +15,3 @@ export interface ILibrosEscritos {
   Nombre: string;
   Editorial: string;
 }
-
-export interface IAutorApi {
-  id: string;
-  nombre: string;
-  nacionalidad: string;
-}

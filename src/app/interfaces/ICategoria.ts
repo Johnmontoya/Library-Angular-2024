@@ -1,9 +1,9 @@
 export interface ICategoriaResponse {
   odata: string;
-  value: Array<ListCategoria | null>;
+  value: Array<ICategoria | null>;
 }
 
-export interface ListCategoria {
+export interface ICategoria {
   Id: string;
   Clave: string;
   Nombre: string;
@@ -14,10 +14,4 @@ export interface ILibrosCategoria {
   Id: string;
   Nombre: string;
   Editorial: string;
-}
-
-export interface ICategoria {
-  id: string;
-  clave: number;
-  nombre: string;
 }

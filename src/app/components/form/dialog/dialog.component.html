@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Datos del estudiante</h2>
+<mat-dialog-content class="mat-typography">  
+    <form [formGroup]="form">      
+      <mat-form-field>
+        <mat-label>DNI</mat-label>
+        <input matInput formControlName="dni" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Direccion</mat-label>
+        <input matInput formControlName="direccion" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Carrera</mat-label>
+        <input matInput formControlName="carrera" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Edad</mat-label>
+        <input matInput formControlName="edad" />
+      </mat-form-field>
+    </form>
+    <div mat-dialog-actions>
+        <button mat-button (click)="close()">Cancelar</button>
+        <button mat-button (click)="save()">Guardar</button>
+      </div>
+</mat-dialog-content>

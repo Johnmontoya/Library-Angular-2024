@@ -3,6 +3,7 @@
     <h1 class="text-3xl text-gray-600 font-bold mb-4 text-center">
       Perfil de Usuario
     </h1>
+    <button mat-button (click)="openDialog()">Open dialog</button>
     <div *ngIf="accountDetail$ | async as user">
       <div class="text-center">
         <div class="rounded-full bg-blue-500 my-4 text-4xl w-24 h-24 inline-flex items-center justify-center font-bold text-white">

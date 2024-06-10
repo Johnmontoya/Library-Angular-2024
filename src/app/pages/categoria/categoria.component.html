@@ -1,15 +1,28 @@
-<div class="h-screen flex items-center justify-center">
-    <app-category-form
-        [errorMessage]="errors"
-        [category]="categoria"
-        *ngIf="categoria"
-        (addCategoria)="saveCategory($event)"
-    />
+<section class="bg-white dark:bg-gray-900 h-svh">
+  <div class="py-8 px-4 mx-auto max-w-screen-xl text-left lg:py-16">
+    <h1
+      class="mb-4 px-7 text-4xl font-bold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
+    >
+      Categorias
+    </h1>
+    <div class="flex flex-col gap-1 w-full justify-start px-6">
+      <div class="w-56">
+        <button
+          class="text-white bg-[#3F76B5] hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-[#3F76B5] dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          mat-button
+          (click)="openDialog()"
+        >
+          Nueva Categoria
+        </button>
+      </div>
 
-    <div class="w-full shadow-sm">
-        <app-category-list [categorias]="categorias$ | async"
-            (deleteCategory)="deleteCategoria($event)"
-            (updateCategory)="setEditCategory($event)"
+      <div class="w-full shadow-sm">
+        <app-category-list
+          [categorias]="categorias$ | async"
+          (deleteCategory)="deleteCategoria($event)"
+          (updateCategory)="setEditCategory($event)"
         />
+      </div>
     </div>
-</div>
+  </div>
+</section>

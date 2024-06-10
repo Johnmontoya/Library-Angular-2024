@@ -20,7 +20,7 @@ import { CategoriaService } from '../../../services/categoria.service';
 import { Observable, map, startWith } from 'rxjs';
 import { ICategoria } from '../../../interfaces/ICategoria';
 import { AutorService } from '../../../services/autor.service';
-import { IAutorApi } from '../../../interfaces/IAutor';
+import { IAutor } from '../../../interfaces/IAutor';
 
 @Component({
   selector: 'app-libro-form',
@@ -47,14 +47,14 @@ export class LibroFormComponent implements OnInit, OnChanges {
     .selectCategorias()
     .pipe(
       map((data: ICategoria[]) =>
-        data.map((categoria: ICategoria) => categoria.nombre)
+        data.map((categoria: ICategoria) => categoria.Nombre)
       )
     );
   listAutor$: Observable<string[]> = this.autorService
     .selectAutor()
-    .pipe(map((data: IAutorApi[]) => data.map((autor: IAutorApi) => autor.nombre)));
+    .pipe(map((data: IAutor[]) => data.map((autor: IAutor) => autor.Nombre)));
   categorias: ICategoria[] = [];
-  autores: IAutorApi[] = [];
+  autores: IAutor[] = [];
   filteredOptions!: Observable<string[]>;
   filteredOptionsAutors!: Observable<string[]>;
   @Input({ required: true }) libro!: ILibro;
@@ -99,32 +99,32 @@ export class LibroFormComponent implements OnInit, OnChanges {
   }
 
   private patchFormValues(libro: ILibro): void {
-    const categoria = this.categorias.find((c) => c.id === libro.CategoriaId);
+    const categoria = this.categorias.find((c) => c.Id === libro.CategoriaId);
     if (categoria) {
-      this.myControl.setValue(categoria.nombre);
+      this.myControl.setValue(categoria.Nombre);
     }
   }
 
   private patchFormValuesAutor(libro: ILibro): void {
-    const autors = this.autores.find((a) => a.id === libro.AutorId);
+    const autors = this.autores.find((a) => a.Id === libro.AutorId);
     if(autors) {
-      this.myControlAutor.setValue(autors.nombre)
+      this.myControlAutor.setValue(autors.Nombre)
     }
   }
 
   save() {
     const selectedCategoria = this.categorias.find(
-      (categoria) => categoria.nombre === this.myControl.value
+      (categoria) => categoria.Nombre === this.myControl.value
     );
     if (selectedCategoria) {
-      this.libro.CategoriaId = selectedCategoria.id;
+      this.libro.CategoriaId = selectedCategoria.Id;
     }
 
     const selectedAutor = this.autores.find(
-      (autores) => autores.nombre === this.myControlAutor.value
+      (autores) => autores.Nombre === this.myControlAutor.value
     );
     if(selectedAutor) {
-      this.libro.AutorId = selectedAutor.id
+      this.libro.AutorId = selectedAutor.Id
     }
 
     this.addLibro.emit(this.libro);
@@ -135,14 +135,14 @@ export class LibroFormComponent implements OnInit, OnChanges {
   private _filterCategoria(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.categorias
-      .map((categoria) => categoria.nombre)
+      .map((categoria) => categoria.Nombre)
       .filter((option) => option.toLowerCase().includes(filterValue));
   }
 
   private _filterAutor(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.autores
-      .map((autor) => autor.nombre)
+      .map((autor) => autor.Nombre)
       .filter((option) => option.toLowerCase().includes(filterValue));
   }
 }

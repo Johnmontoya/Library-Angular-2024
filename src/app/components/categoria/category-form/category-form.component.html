@@ -1,11 +1,13 @@
 <div class="rounded-md mt-5 p-5">
-    <form (ngSubmit)="save()">
+  <mat-dialog-content class="mat-typography">
+    <h2 mat-dialog-title>{{ name$ }}</h2>
+    <form [formGroup]="categoryForm">
       <mat-form-field class="w-full">
         <mat-label>Clave</mat-label>
         <input
           matInput
-          name="calve"
-          [(ngModel)]="category.clave"
+          name="Clave"
+          formControlName="Clave"
           placeholder="Identificador de la categoria"
           required
         />
@@ -15,30 +17,29 @@
         <mat-label>Nombre</mat-label>
         <input
           matInput
-          name="name"
-          [(ngModel)]="category.nombre"
+          name="Nombre"
+          formControlName="Nombre"
           placeholder="Nombre de la categoria"
           required
         />
-      </mat-form-field>
-  
-      @if(errorMessage){
-      <p class="text-base text-red-500">
-          @for(error of errorMessage; track error){
-          <div
-              class="bg-red-100 border mb-2 flex flex-col gap-2 border-red-400 text-red-400 px-4 py-4 rounded-md relative"
-          >
-              <div class="text-xs p-2">{{ error.description }}</div>
-          </div>
-          }
-      </p>
-      }
-      <button
-        [disabled]="!category.nombre"
-        type="submit"
-        class="bg-purple-600 px-4 disabled:bg-purple-400 rounded-md text-white py-2 m-2"
-      >
-        Guardar Categoria
-      </button>
+      </mat-form-field>      
     </form>
+
+  </mat-dialog-content>
+  <div mat-dialog-actions class="flex justify-end">
+    <button
+      type="button"
+      class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+      (click)="close()"
+    >
+      Cancelar
+    </button>
+    <button
+      type="button"
+      class="text-white bg-[#3F76B5] hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-[#3F76B5] dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      (click)="save()"
+    >
+      Aceptar
+    </button>
   </div>
+</div>

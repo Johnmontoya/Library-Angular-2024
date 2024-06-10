@@ -13,6 +13,7 @@ import { AutorComponent } from './pages/autor/autor.component';
 import { LibroComponent } from './pages/libro/libro.component';
 import { AutorDetailComponent } from './pages/autor/autor-detail/autor-detail.component';
 import { CategoriaDetailComponent } from './pages/categoria/categoria-detail/categoria-detail.component';
+import { PrestamoComponent } from './pages/prestamo/prestamo.component';
 
 export const routes: Routes = [
   {
@@ -81,5 +82,13 @@ export const routes: Routes = [
     data: {
       roles: ['Admin']
     }
-  }
+  },
+  {
+    path: 'prestamos',
+    component: PrestamoComponent,
+    canActivate: [roleGuard],
+    data: {
+      roles: ['Admin']
+    }
+  },
 ];

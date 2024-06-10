@@ -1,6 +1,6 @@
 <div class="h-screen flex items-center justify-center">
   <form
-    class="shadow-md rounded-md p-5 bg-white w-1/5"
+    class="shadow-md rounded-md p-5 bg-white w-full sm:w-1/2 md:w-1/2 lg:w-96"
     [formGroup]="registerForm"
     (ngSubmit)="register()"
   >
@@ -12,8 +12,8 @@
     </div>
     }
     <div class="py-4">
-      <h1 class="font-bold text-left py-2">Register</h1>
-      <h6 class="text-slate-600 text-base">Crear nueva cuenta</h6>
+      <span class="font-bold py-2 text-[#282A33] text-3xl">Registrar Usuario</span>
+      <h5 class="text-slate-600 text-lg">Ingresa tus credenciales</h5>
     </div>
 
     <mat-form-field appearance="fill" class="w-full">
@@ -29,7 +29,7 @@
         placeholder="Nombre de usuario"
         formControlName="userName"
       />
-      <mat-icon matPrefix>username</mat-icon>
+      <mat-icon matPrefix>person</mat-icon>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="w-full">
@@ -76,14 +76,15 @@
     <button
       type="submit"
       [disabled]="!registerForm.valid"
-      class="w-full border-collapse text-white rounded-md border-slate-200 disabled:bg-purple-400 py-2 px-3 bg-purple-700"
+      class="w-full flex items-center justify-center gap-2 disabled:bg-gray-400 text-white bg-[#3F76B5] hover:bg-[#3f51b5] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-[#3F76B5] dark:hover:bg-[#3f51b5] focus:outline-none dark:focus:ring-blue-800 cursor-pointer"
     >
+    <mat-icon>login</mat-icon>
       Registrarse
     </button>
 
     <div class="my-4">
-      <span class="text-slate-600"> Already have an account? </span>
-      <a href="" class="text-purple-700" [routerLink]="['/login']">Login</a>
+      <span class="text-slate-600"> ¿Ya tienes una cuenta? </span>
+      <a class="text-blue-700" [routerLink]="['/login']">Iniciar Sesión</a>
     </div>
   </form>
 </div>

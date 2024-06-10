@@ -14,7 +14,9 @@ export class CategoriaService {
   constructor(private http: HttpClient) {}
 
   selectCategorias = (): Observable<ICategoria[]> => {
-    return this.http.get<ICategoria[]>(`${this.apiUrl}/api/categorias`);
+    return this.http.get<ICategoria[]>(`${this.apiUrl}/api/categorias`, 
+      {params: new HttpParams().set('$expand', 'librosCategoria')}
+    );
   };
 
   getCategoria = (id: string): Observable<ICategoriaResponse> => {
@@ -38,7 +40,7 @@ export class CategoriaService {
 
   updateCategoria = (category: ICategoria): Observable<IApiResponse> => {
     return this.http.put<IApiResponse>(
-      `${this.apiUrl}/api/categorias/${category.id}`,
+      `${this.apiUrl}/api/categorias/${category.Id}`,
       category
     );
   };

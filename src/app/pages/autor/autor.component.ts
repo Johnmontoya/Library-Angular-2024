@@ -9,48 +9,71 @@ import Swal from 'sweetalert2';
 import { AutorListComponent } from '../../components/autor/autor-list/autor-list.component';
 import { AutorFormComponent } from '../../components/autor/autor-form/autor-form.component';
 import { AsyncPipe, CommonModule } from '@angular/common';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ToastComponent } from '../../components/toast/toast.component';
 
 @Component({
   selector: 'app-autor',
   standalone: true,
   imports: [AutorListComponent, AutorFormComponent, AsyncPipe, CommonModule],
   templateUrl: './autor.component.html',
-  styleUrl: './autor.component.scss'
+  styleUrl: './autor.component.scss',
 })
 export class AutorComponent {
   autorService = inject(AutorService);
   matSnackBar = inject(MatSnackBar);
   autor: IAutor = {} as IAutor;
-  autores$ = this.autorService.getAutors();
+  autores$ = this.autorService.selectAutor();
   errors: IValidationError[] = [];
   isEditing: boolean = false;
+  currentAutor: IAutor | null = null;
 
-  saveAutor(autor: IAutor) {
-    if(this.isEditing) {
-      this.updateAutor(autor)
-    } else {
-      this.createAutor(autor)
-    }
+  constructor(public dialog: MatDialog) {}
+
+  openDialog() {
+    const dialogRef = this.dialog.open(AutorFormComponent, {
+      data: {
+        errorMessage: this.errors,
+        autor: this.isEditing
+          ? this.currentAutor
+          : { Nombre: '', Nacionalidad: '' },
+        edit: this.isEditing ? 'Actualizar Autor' : 'Nuevo Autor',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        if (this.isEditing) {
+          this.updateAutor(result);
+        } else {
+          this.createAutor(result, dialogRef);
+        }
+        this.isEditing = false;
+      }
+      this.isEditing = false;
+    });
   }
 
   setEditAutor(autor: IAutor) {
-    this.autor = {
+    this.isEditing = true;
+    this.currentAutor = {
       Id: autor.Id,
       Nombre: autor.Nombre,
       Nacionalidad: autor.Nacionalidad,
-      LibrosEscritos: autor.LibrosEscritos
+      LibrosEscritos: autor.LibrosEscritos,
     };
-    this.isEditing = true;
+    this.openDialog();
   }
 
-  createAutor(autor: IAutor){
+  createAutor(autor: IAutor, dialogRef: MatDialogRef<AutorFormComponent>) {
     this.autorService.createAutor(autor).subscribe({
       next: (response: IApiResponse) => {
-        this.autores$ = this.autorService.getAutors();
+        this.autores$ = this.autorService.selectAutor();
         this.matSnackBar.open(response.message, 'Close', {
           duration: 5000,
           horizontalPosition: 'center',
         });
+        dialogRef.close();
       },
       error: (err: HttpErrorResponse) => {
         if (err!.status === 400) {
@@ -61,9 +84,11 @@ export class AutorComponent {
           } else {
             this.errors = [err.error];
           }
-          this.matSnackBar.open('Error de validacion', 'Close', {
+          this.matSnackBar.openFromComponent(ToastComponent, {
             duration: 5000,
-            horizontalPosition: 'center',
+            data: {
+              message: this.errors
+            }
           });
         }
       },
@@ -73,14 +98,14 @@ export class AutorComponent {
           duration: 5000,
           horizontalPosition: 'center',
         });
-      }
-    })
+      },
+    });
   }
 
   updateAutor(autor: IAutor) {
     this.autorService.updateAutor(autor).subscribe({
       next: (response: IApiResponse) => {
-        this.autores$ = this.autorService.getAutors();
+        this.autores$ = this.autorService.selectAutor();
         this.matSnackBar.open(response.message, 'Close', {
           duration: 3000,
         });
@@ -113,10 +138,10 @@ export class AutorComponent {
       showCancelButton: true,
       confirmButtonText: 'Si, borrar el autor',
     }).then((result) => {
-      if(result.value) {
+      if (result.value) {
         this.autorService.delete(autor.Id).subscribe({
           next: (response: IApiResponse) => {
-            this.autores$ = this.autorService.getAutors();
+            this.autores$ = this.autorService.selectAutor();
             this.matSnackBar.open(response.message, 'Close', {
               duration: 3000,
             });
@@ -130,9 +155,9 @@ export class AutorComponent {
         Swal.fire({
           title: 'Borrado',
           text: 'El autor ha sido eliminado',
-          icon:'success'
-        })
+          icon: 'success',
+        });
       }
-    })    
+    });
   }
 }

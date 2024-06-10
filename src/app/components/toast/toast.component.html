@@ -1,0 +1,15 @@
+<div class="flex flex-row justify-between bg-red-500">
+  @for(error of data.message; track error){
+  <span matSnackBarLabel> {{ error.description }} </span>
+  }
+
+  <span matSnackBarActions>
+    <button
+      mat-stroked-button
+      matSnackBarAction
+      (click)="snackBarRef.dismissWithAction()"
+    >
+      <span class="text-sm text-white">Close</span>
+    </button>
+  </span>
+</div>

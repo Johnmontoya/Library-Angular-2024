@@ -1,36 +1,46 @@
-<div class="h-screen flex items-center justify-center">
-  <mat-card class="w-96 rounded-md" style="background-color: #fff">
+<section class="bg-white dark:bg-gray-900 h-svh">
+  <div class="py-8 px-4 mx-auto max-w-screen-xl text-left lg:py-16">
     @for (categoria of categoriaInfo$?.value; track categoria?.Id) {
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>{{ categoria?.Nombre }}</mat-card-title>
-      <mat-card-subtitle [className]="['text-slate-800']">{{
+    <div class="flex flex-col gap-1 mb-4 px-7">
+      <h1
+        class="text-4xl font-bold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
+      >
+        {{ categoria?.Nombre }}
+      </h1>
+      <span class="text-lg font-normal dark:text-zinc-400">{{
         categoria?.Clave
-      }}</mat-card-subtitle>
-    </mat-card-header>
-    <img
-      mat-card-image
-      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-      alt="Photo of a Shiba Inu"
-    />
-    <mat-card-content>
-      <h2>Libros escritos</h2>
-      <mat-list>
-        @for(libros of categoria?.LibrosCategoria; track libros?.Id){
-        <mat-list-item>
-          <span matListItemTitle [className]="['text-slate-900']">
-            <span class="font-semibold">Titulo: </span> {{ libros?.Nombre }}
-          </span>
-          <span [className]="['text-slate-900']">
-            <span class="font-semibold">Editorial: </span>
-            {{ libros?.Editorial }}
-          </span>
-          <mat-divider></mat-divider>
-        </mat-list-item>
-
-        }
-      </mat-list>
-    </mat-card-content>
+      }}</span>
+    </div>
+    <div class="relative my-4 px-7">
+      <img
+        src="https://lh3.googleusercontent.com/a/AGNmyxbSlMgTRzE3_SMIxpDAhpNad-_CN5_tmph1NQ1KhA=s96-c"
+        class="relative object-cover shrink-0 h-28 w-28 z-10 rounded-xl border-2 border-solid border-[#3f76b5]"
+      />
+    </div>
+    <div
+      class="mx-20 mt-20 w-Full p-4 shadow-md rounded-lg border-t-2 border-[#3f76b5]"
+    >
+      <div class="flex justify-between pb-4">
+        <p class="font-bold text-xl text-white">Libros</p>
+      </div>
+      <div
+        class="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+        id="accordion-collapse-body-1"
+      >
+      @for(libros of categoria?.LibrosCategoria; track libros?.Id){
+      <a href="#"
+            class="flex border items-center rounded-md cursor-pointer">
+            <div class="w-16 p-2 shrink-0">
+                <img src="https://www.svgrepo.com/show/513272/book-closed.svg" alt="" class="h-12 w-12">
+            </div>
+            <div class="p-2">
+                <p class="font-semibold text-lg text-white">{{ libros?.Nombre }}</p>
+                <span class="text-gray-400">{{ libros?.Editorial }}</span>
+            </div>
+        </a>
+      }
+    </div>
+    </div>
     }
-  </mat-card>
-</div>
+  </div>
+</section>

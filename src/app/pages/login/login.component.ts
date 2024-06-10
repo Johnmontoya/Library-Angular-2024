@@ -13,6 +13,8 @@ import { AuthService } from '../../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IApiResponse } from '../../interfaces/IApiResponse';
 import { IValidationError } from '../../interfaces/IValidationError';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +22,8 @@ import { IValidationError } from '../../interfaces/IValidationError';
   imports: [
     MatInputModule,
     MatIconModule,
+    MatButtonModule,
+    MatTooltip,
     RouterLink,
     ReactiveFormsModule,
     MatSnackBarModule,
