@@ -1,15 +1,84 @@
 <div class="rounded-md mt-5 p-5">
-    <form (ngSubmit)="save()">
-      <!--<mat-form-field class="w-full">
+  <mat-dialog-content class="mat-typography">
+    <h2 mat-dialog-title>{{ name$ }}</h2>
+    <form [formGroup]="libroForm">
+
+      <mat-form-field class="w-full">
+        <mat-label>Nombre</mat-label>
+        <input
+          matInput
+          name="Nombre"
+          formControlName="Nombre"
+          placeholder="Nombre del libro"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
         <mat-label>Categoria</mat-label>
         <input
           matInput
           name="CategoriaId"
-          [(ngModel)]="libro.CategoriaId"
-          placeholder="Identificador de la categoria"
+          formControlName="CategoriaId"
+          placeholder="Categoria"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Editorial</mat-label>
+        <input
+          matInput
+          name="Editorial"
+          formControlName="Editorial"
+          placeholder="Editorial del libro"
           required
         />
-      </mat-form-field>-->
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Autor</mat-label>
+        <input
+          matInput
+          name="AutorId"
+          formControlName="AutorId"
+          placeholder="Autor"
+          [matAutocomplete]="autoAutor"
+        />
+        <mat-autocomplete autoActiveFirstOption #autoAutor="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptionsAutors | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+    </form>
+  </mat-dialog-content>
+  <div mat-dialog-actions class="flex justify-end">
+    <button
+      type="button"
+      class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+      (click)="close()"
+    >
+      Cancelar
+    </button>
+    <button
+      type="button"
+      class="text-white bg-[#3F76B5] hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-[#3F76B5] dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      (click)="save()"
+    >
+      Aceptar
+    </button>
+  </div>
+</div>
+
+<!--<div class="rounded-md mt-5 p-5">
+    <form (ngSubmit)="save()">
       <mat-form-field class="w-full">
         <mat-label>Categoria</mat-label>
         <input type="text"
@@ -83,4 +152,4 @@
         Guardar Libro
       </button>
     </form>
-  </div>
+  </div>-->

@@ -1,8 +1,29 @@
+import { ILibro } from "./ILibro";
+
 export interface IPrestamos {
-    id: string;
-    idEstudiate: string;
-    idLibro: string;
-    fechaPrestamo: string;
-    fechaDevolucion: string;
-    devuelto: boolean;
+    Id: string;
+    IdEstudiante: string;
+    IdLibro: string;
+    FechaPrestamo: string;
+    FechaDevolucion: string;
+    Devuelto: boolean;
+    Estudiante: Estudiante
+    Libro: Libro
 }
+
+export interface Estudiante {
+    Id: string;
+    DNI: number;
+    Direccion: string;
+    Carrera: string;
+    Edad: number;
+    Activo: boolean;
+}
+
+export interface Libro {
+    Id: string;
+    CategoriaId: string;
+    Nombre: string;
+    Editorial: string;
+    AutorId: string
+  }

@@ -9,6 +9,7 @@ import { IApiResponse } from '../../interfaces/IApiResponse';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-libro',
@@ -21,20 +22,40 @@ export class LibroComponent {
   libroService = inject(LibroService);
   matSnackBar = inject(MatSnackBar);
   libro: ILibro = {} as ILibro;
-  libros$ = this.libroService.getLibros();
+  libros$ = this.libroService.selectLibros();
   errors: IValidationError[] = [];
   isEditing: boolean = false;
+  currentLibro: ILibro | null = null;
 
-  saveLibro(libro: ILibro) {
-    if (this.isEditing) {
-      this.updateLibro(libro)
-    } else {
-      this.createLibro(libro)
-    }
+  constructor(public dialog: MatDialog) {}
+
+  openDialog() {
+    const dialogRef = this.dialog.open(LibroFormComponent, {
+      data: {
+        errorMessage: this.errors,
+        libros: this.isEditing
+          ? this.currentLibro
+          : { Nombre: '', AutorId: '', CategoriaId: '', Editorial: '' },
+        edit: this.isEditing ? 'Actualizar Libro' : 'Nuevo Libro',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        if (this.isEditing) {
+          this.updateLibro(result);
+        } else {
+          this.createLibro(result);
+        }
+        this.isEditing = false;
+      }
+      this.isEditing = false;
+    });
   }
 
-  setEditLibro(libro: ILibro) {
-    this.libro = {
+  setEditLibro(libro: ILibro) {    
+    this.isEditing = true;
+    this.currentLibro = {
       Id: libro.Id,
       CategoriaId: libro.CategoriaId,
       Nombre: libro.Nombre,
@@ -43,13 +64,13 @@ export class LibroComponent {
       Categoria: libro.Categoria,
       Autor: libro.Autor
     };
-    this.isEditing = true;
+    this.openDialog();
   }
 
   createLibro(libro: ILibro){
     this.libroService.createLibro(libro).subscribe({
       next: (response: IApiResponse) => {
-        this.libros$ = this.libroService.getLibros();
+        this.libros$ = this.libroService.selectLibros();
         this.matSnackBar.open(response.message, 'Close', {
           duration: 5000,
           horizontalPosition: 'center',
@@ -83,7 +104,7 @@ export class LibroComponent {
   updateLibro(libro: ILibro) {
     this.libroService.updateLibro(libro).subscribe({
       next: (response: IApiResponse) => {
-        this.libros$ = this.libroService.getLibros();
+        this.libros$ = this.libroService.selectLibros();
         this.matSnackBar.open(response.message, 'Close', {
           duration: 3000,
         });
@@ -119,7 +140,7 @@ export class LibroComponent {
       if(result.value) {
         this.libroService.delete(libro.Id).subscribe({
           next: (response: IApiResponse) => {
-            this.libros$ = this.libroService.getLibros();
+            this.libros$ = this.libroService.selectLibros();
             this.matSnackBar.open(response.message, 'Close', {
               duration: 3000,
             });

@@ -12,6 +12,12 @@ export class LibroService {
   apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
+  
+  selectLibros = (): Observable<ILibro[]> => {
+    return this.http.get<ILibro[]>(`${this.apiUrl}/api/libros`,
+      {params: new HttpParams().set('$expand', 'categoria, autor')}
+    );
+  }
 
   getLibros = (): Observable<ILibroResponse> => {
     return this.http

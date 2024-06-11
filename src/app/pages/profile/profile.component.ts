@@ -10,11 +10,12 @@ import { IApiResponse } from '../../interfaces/IApiResponse';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IValidationError } from '../../interfaces/IValidationError';
+import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, MatDialogModule],
+  imports: [CommonModule, MatDialogModule, MatDivider],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
